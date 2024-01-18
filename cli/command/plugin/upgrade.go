@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/distribution/reference"
 	"github.com/docker/cli/cli"
 	"github.com/docker/cli/cli/command"
-	"github.com/docker/distribution/reference"
 	"github.com/docker/docker/pkg/jsonmessage"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
@@ -24,7 +24,7 @@ func newUpgradeCommand(dockerCli command.Cli) *cobra.Command {
 			if len(args) == 2 {
 				options.remote = args[1]
 			}
-			return runUpgrade(dockerCli, options)
+			return runUpgrade(cmd.Context(), dockerCli, options)
 		},
 		Annotations: map[string]string{"version": "1.26"},
 	}
@@ -35,8 +35,7 @@ func newUpgradeCommand(dockerCli command.Cli) *cobra.Command {
 	return cmd
 }
 
-func runUpgrade(dockerCli command.Cli, opts pluginOptions) error {
-	ctx := context.Background()
+func runUpgrade(ctx context.Context, dockerCli command.Cli, opts pluginOptions) error {
 	p, _, err := dockerCli.Client().PluginInspectWithRaw(ctx, opts.localName)
 	if err != nil {
 		return errors.Errorf("error reading plugin data: %v", err)

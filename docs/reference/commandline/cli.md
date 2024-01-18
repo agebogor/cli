@@ -2,7 +2,7 @@
 title: "Use the Docker command line"
 description: "Docker's CLI command description and usage"
 keywords: "Docker, Docker documentation, CLI, command line, config.json, CLI configuration file"
-redirect_from:
+aliases:
   - /reference/commandline/cli/
   - /engine/reference/commandline/engine/
   - /engine/reference/commandline/engine_activate/
@@ -134,6 +134,7 @@ line:
 | `DOCKER_DEFAULT_PLATFORM`     | Default platform for commands that take the `--platform` flag.                                                                                                                                                                                               |
 | `DOCKER_HIDE_LEGACY_COMMANDS` | When set, Docker hides "legacy" top-level commands (such as `docker rm`, and `docker pull`) in `docker help` output, and only `Management commands` per object-type (e.g., `docker container`) are printed. This may become the default in a future release. |
 | `DOCKER_HOST`                 | Daemon socket to connect to.                                                                                                                                                                                                                                 |
+| `DOCKER_TLS`                  | Enable TLS for connections made by the `docker` CLI (equivalent of the `--tls` command-line option). Set to a non-empty value to enable TLS. Note that TLS is enabled automatically if any of the other TLS options are set.                                 |
 | `DOCKER_TLS_VERIFY`           | When set Docker uses TLS and verifies the remote. This variable is used both by the `docker` CLI and the [`dockerd` daemon](dockerd.md)                                                                                                                      |
 | `BUILDKIT_PROGRESS`           | Set type of progress output (`auto`, `plain`, `tty`) when [building](build.md) with [BuildKit backend](https://docs.docker.com/build/buildkit/). Use plain to show container output (default `auto`).                                                        |
 
@@ -155,7 +156,7 @@ By default, the Docker command line stores its configuration files in a
 directory called `.docker` within your `$HOME` directory.
 
 Docker manages most of the files in the configuration directory
-and you should not modify them. However, you *can* modify the
+and you shouldn't modify them. However, you can modify the
 `config.json` file to control certain aspects of how the `docker`
 command behaves.
 
@@ -165,7 +166,6 @@ variables or command-line options. You can also use options within
 and the `--config` flag are set, the flag takes precedent over the environment
 variable. Command line options override environment variables and environment
 variables override properties you specify in a `config.json` file.
-
 
 ### Change the `.docker` directory
 
@@ -200,7 +200,7 @@ By default, configuration file is stored in `~/.docker/config.json`. Refer to th
 different location.
 
 > **Warning**
-> 
+>
 > The configuration file and other files inside the `~/.docker` configuration
 > directory may contain sensitive information, such as authentication information
 > for proxies or, depending on your credential store, credentials for your image
@@ -209,38 +209,39 @@ different location.
 
 ### Customize the default output format for commands
 
-These fields allow you to customize the default output format for some commands
+These fields lets you customize the default output format for some commands
 if no `--format` flag is provided.
 
-| Property               | Description                                                                                                                                                                                                              |
-|:-----------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `configFormat`         | Custom default format for `docker config ls` output. Refer to the [**format the output** section in the `docker config ls` documentation](config_ls.md#format) for a list of supported formatting directives.            |
-| `imagesFormat`         | Custom default format for `docker images` / `docker image ls` output. Refer to the [**format the output** section in the `docker images` documentation](images.md#format) for a list of supported formatting directives. |
-| `nodesFormat`          | Custom default format for `docker node ls` output. Refer to the [**formatting** section in the `docker node ls` documentation](node_ls.md#format) for a list of supported formatting directives.                         |
-| `pluginsFormat`        | Custom default format for `docker plugin ls` output. Refer to the [**formatting** section in the `docker plugin ls` documentation](plugin_ls.md#format) for a list of supported formatting directives.                   |
-| `psFormat`             | Custom default format for `docker ps` / `docker container ps` output. Refer to the [**formatting** section in the `docker ps` documentation](ps.md#format) for a list of supported formatting directives.                |
-| `secretFormat`         | Custom default format for `docker secret ls` output. Refer to the [**format the output** section in the `docker secret ls` documentation](secret_ls.md#format) for a list of supported formatting directives.            |
-| `serviceInspectFormat` | Custom default format for `docker service inspect` output. Refer to the [**formatting** section in the `docker service inspect` documentation](service_inspect.md#format) for a list of supported formatting directives. |
-| `servicesFormat`       | Custom default format for `docker service ls` output. Refer to the [**formatting** section in the `docker service ls` documentation](service_ls.md#format) for a list of supported formatting directives.                |
-| `statsFormat`          | Custom default format for `docker stats` output. Refer to the [**formatting** section in the `docker stats` documentation](stats.md#format) for a list of supported formatting directives.                               |
-
+| Property               | Description                                                                                                                                                         |
+| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `configFormat`         | Custom default format for `docker config ls` output. See [`docker config ls`](config_ls.md#format) for a list of supported formatting directives.                   |
+| `imagesFormat`         | Custom default format for `docker images` / `docker image ls` output. See [`docker images`](images.md#format) for a list of supported formatting directives.        |
+| `networksFormat`       | Custom default format for `docker network ls` output. See [`docker network ls`](network_ls.md#format) for a list of supported formatting directives.                |
+| `nodesFormat`          | Custom default format for `docker node ls` output. See [`docker node ls`](node_ls.md#format) for a list of supported formatting directives.                         |
+| `pluginsFormat`        | Custom default format for `docker plugin ls` output. See [`docker plugin ls`](plugin_ls.md#format) for a list of supported formatting directives.                   |
+| `psFormat`             | Custom default format for `docker ps` / `docker container ps` output. See [`docker ps`](ps.md#format) for a list of supported formatting directives.                |
+| `secretFormat`         | Custom default format for `docker secret ls` output. See [`docker secret ls`](secret_ls.md#format) for a list of supported formatting directives.                   |
+| `serviceInspectFormat` | Custom default format for `docker service inspect` output. See [`docker service inspect`](service_inspect.md#format) for a list of supported formatting directives. |
+| `servicesFormat`       | Custom default format for `docker service ls` output. See [`docker service ls`](service_ls.md#format) for a list of supported formatting directives.                |
+| `statsFormat`          | Custom default format for `docker stats` output. See [`docker stats`](stats.md#format) for a list of supported formatting directives.                               |
+| `tasksFormat`          | Custom default format for `docker stack ps` output. See [`docker stack ps`](stack_ps.md#format) for a list of supported formatting directives.                      |
+| `volumesFormat`        | Custom default format for `docker volume ls` output. See [`docker volume ls`](volume_ls.md#format) for a list of supported formatting directives.                   |
 
 ### Custom HTTP headers
 
 The property `HttpHeaders` specifies a set of headers to include in all messages
-sent from the Docker client to the daemon. Docker does not try to interpret or
+sent from the Docker client to the daemon. Docker doesn't try to interpret or
 understand these headers; it simply puts them into the messages. Docker does
 not allow these headers to change any headers it sets for itself.
-
 
 ### Credential store options
 
 The property `credsStore` specifies an external binary to serve as the default
 credential store. When this property is set, `docker login` will attempt to
 store credentials in the binary specified by `docker-credential-<value>` which
-is visible on `$PATH`. If this property is not set, credentials will be stored
-in the `auths` property of the config. For more information, see the
-[**Credential stores** section in the `docker login` documentation](login.md#credential-stores)
+is visible on `$PATH`. If this property isn't set, credentials are stored
+in the `auths` property of the CLI configuration file. For more information,
+see the [**Credential stores** section in the `docker login` documentation](login.md#credential-stores)
 
 The property `credHelpers` specifies a set of credential helpers to use
 preferentially over `credsStore` or `auths` when storing and retrieving
@@ -249,14 +250,13 @@ credentials for specific registries. If this property is set, the binary
 for a specific registry. For more information, see the
 [**Credential helpers** section in the `docker login` documentation](login.md#credential-helpers)
 
-
 ### Automatic proxy configuration for containers
 
 The property `proxies` specifies proxy environment variables to be automatically
 set on containers, and set as `--build-arg` on containers used during `docker build`.
-A `"default"` set of proxies can be configured, and will be used for any docker
-daemon that the client connects to, or a configuration per host (docker daemon),
-for example, "https://docker-daemon1.example.com". The following properties can
+A `"default"` set of proxies can be configured, and will be used for any Docker
+daemon that the client connects to, or a configuration per host (Docker daemon),
+for example, `https://docker-daemon1.example.com`. The following properties can
 be set for each environment:
 
 | Property       | Description                                                                                             |
@@ -273,11 +273,12 @@ used as proxy settings for the `docker` CLI or the `dockerd` daemon. Refer to th
 sections for configuring proxy settings for the cli and daemon.
 
 > **Warning**
-> 
+>
 > Proxy settings may contain sensitive information (for example, if the proxy
 > requires authentication). Environment variables are stored as plain text in
 > the container's configuration, and as such can be inspected through the remote
 > API or committed to an image when using `docker commit`.
+{ .warning }
 
 ### Default key-sequence to detach from containers
 
@@ -291,7 +292,7 @@ a letter [a-Z], or the `ctrl-` combined with any of the following:
 * `@` (at sign)
 * `[` (left bracket)
 * `\\` (two backward slashes)
-*  `_` (underscore)
+* `_` (underscore)
 * `^` (caret)
 
 Your customization applies to all containers started in with your Docker client.
@@ -299,12 +300,11 @@ Users can override your custom or the default key sequence on a per-container
 basis. To do this, the user specifies the `--detach-keys` flag with the `docker
 attach`, `docker exec`, `docker run` or `docker start` command.
 
-### CLI Plugin options
+### CLI plugin options
 
 The property `plugins` contains settings specific to CLI plugins. The
 key is the plugin name, while the value is a further map of options,
 which are specific to that plugin.
-
 
 ### Sample configuration file
 
@@ -312,7 +312,6 @@ Following is a sample `config.json` file to illustrate the format used for
 various fields:
 
 ```json
-{% raw %}
 {
   "HttpHeaders": {
     "MyHeader": "MyValue"
@@ -355,7 +354,6 @@ various fields:
     }
   }
 }
-{% endraw %}
 ```
 
 ### Experimental features
@@ -371,7 +369,7 @@ and require no configuration to enable them.
 
 If using your own notary server and a self-signed certificate or an internal
 Certificate Authority, you need to place the certificate at
-`tls/<registry_url>/ca.crt` in your docker config directory.
+`tls/<registry_url>/ca.crt` in your Docker config directory.
 
 Alternatively you can trust the certificate globally by adding it to your system's
 list of root Certificate Authorities.
